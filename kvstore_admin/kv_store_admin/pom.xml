@@ -1,0 +1,47 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>com.huawei.hwcloud.tarus.kvstore</groupId>
+    <artifactId>kvstore_admin</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+  </parent>
+    
+  <artifactId>kv_store_admin</artifactId>
+  <packaging>war</packaging>
+  
+  <dependencies>
+    <!-- kvstore -->
+    <dependency>
+		<groupId>com.huawei.hwcloud.tarus.kvstore</groupId>
+		<artifactId>kv_store</artifactId>
+	</dependency>
+	<dependency>
+		<groupId>com.huawei.hwcloud.tarus.kvstore</groupId>
+		<artifactId>kv_store_race</artifactId>
+	</dependency>
+  </dependencies>
+  
+  <build>
+		<finalName>${artifactId}</finalName>
+		<sourceDirectory>src/main/java</sourceDirectory>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<version>${maven-war-plugin.version}</version>
+				<configuration>
+					<failOnMissingWebXml>false</failOnMissingWebXml>
+					<archiveClasses>true</archiveClasses>
+					<webResources>
+						<resource>
+							<directory>src/main/webapp</directory>
+							<targetPath>./</targetPath>
+							<filtering>true</filtering>
+						</resource>
+					</webResources>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>

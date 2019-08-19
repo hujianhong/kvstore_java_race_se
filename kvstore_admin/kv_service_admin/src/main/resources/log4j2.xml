@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration status="off" monitorInterval="1800">
+    <properties>
+        <Property name="LOG_HOME">${sys:kvs.home}/</Property>
+        <Property name="FILE_NAME">kfs</Property>
+        <Property name="LOG_PATTERN">%d %t [%p] --> %m [%l]%n</Property>
+    </properties>
+    <appenders>
+        <Console name="console" target="SYSTEM_OUT" follow="true">
+            <PatternLayout pattern="${LOG_PATTERN}"/>
+        </Console>
+        <!-- app log -->
+    </appenders>
+
+    <loggers>
+        <logger name="org.apache.commons" level="warn" additivity="false">
+            <appender-ref ref="console"/>
+        </logger>
+        <!-- Root Logger -->
+        <root level="info">
+            <appender-ref ref="console"/>
+        </root>
+    </loggers>
+</configuration>
+

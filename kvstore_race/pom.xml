@@ -1,0 +1,26 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.huawei.hwcloud.tarus.kvstore</groupId>
+        <artifactId>kvstore_java_se</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>kvstore_race</artifactId>
+    <packaging>pom</packaging>
+
+    <modules>
+		<!-- modules -->
+		<module>kv_service_race</module>
+		<module>kv_store_race</module>
+	    <module>kv_util</module>
+    </modules>
+	<dependencies>
+		<dependency>
+			<groupId>moe.cnkirito.kdio</groupId>
+			<artifactId>kdio-core</artifactId>
+			<version>1.0.0</version>
+		</dependency>
+	</dependencies>
+</project>

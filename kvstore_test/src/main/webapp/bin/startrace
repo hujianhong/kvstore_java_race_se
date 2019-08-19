@@ -1,0 +1,78 @@
+#!/bin/sh
+##################################################
+# KV HOME
+##################################################
+FILEPATH=$(cd "$(dirname "$0")";cd ..; pwd)
+#logging filepath:$FILEPATH
+
+KV_HOME=${FILEPATH}
+KV_RUN=$KV_HOME/bin
+
+##################################################
+# set console log file, user the first parameter 
+##################################################
+LOG_FILE=$KV_HOME/kv_console.log
+
+exec 1>>$LOG_FILE
+exec 2>>$LOG_FILE
+
+##################################################
+# Some utility functions
+##################################################
+logging()
+{
+  local currenttime=`date +"%Y-%m-%d %H:%M:%S"`
+  echo "[${currenttime}]" "[KVServer]" $*
+}
+
+if [ $# -lt 3 ] 
+then
+  logging param is less than 3...
+  exit 1
+fi
+
+JAVA_OPTIONS="-server -Xms1536m -Xmx1536m -XX:MaxDirectMemorySize=512m -XX:MaxMetaspaceSize=300m -XX:NewRatio=1 -XX:+UseConcMarkSweepGC -XX:+UseParNewGC -XX:-UseBiasedLocking -Dkvs.home=$KV_HOME -Dkvs.check.mode=$1 -Dkvs.execute.mode=$2 -Dkvs.per.thread.kv.num=$3"
+
+if [ $# -ge 4 ] 
+then
+  JAVA_OPTIONS="$JAVA_OPTIONS -Dkvs.thread.num=$4"
+fi
+
+_LIB_PATH=
+libjars(){
+	for file in $KV_HOME/WEB-INF/lib/*.jar
+	do
+		if [ -f $file ]
+		then
+			#logging $file
+			_LIB_PATH="${_LIB_PATH}:${file}"
+		fi
+	done
+}
+libjars
+LIB_PATH=${_LIB_PATH}:${CLASSPATH}
+export LIB_PATH
+
+##################################################
+# Do the action
+##################################################
+logging startting KV Server:
+logging classpath:[${LIB_PATH}]
+logging KV_HOME:[$KV_HOME]
+#logging pid:[$$}
+#logging pid:[$!]
+
+#logging java options
+logging java options:[${JAVA_OPTIONS}]
+
+#logging java version
+logging java version:
+$JAVA_HOME/bin/java -version
+
+nohup $JAVA_HOME/bin/java ${JAVA_OPTIONS} -classpath $LIB_PATH com.huawei.hwcloud.tarus.kvstore.KVStore 2>&1 >>${LOG_FILE} &
+
+#disown $!
+logging start shell pid:[$$}
+logging java program pid:[$!]
+
+logging Start Shell Finish...
