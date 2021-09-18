@@ -19,7 +19,7 @@
 		<java.version>1.8</java.version>
 	
 		<!-- logger version begin -->
-		<log4j2.version>2.8.2</log4j2.version>
+		<log4j2.version>2.13.2</log4j2.version>
 		<disruptor.version>3.3.6</disruptor.version>
 		<slf4j.version>1.7.25</slf4j.version>
 		<!-- logger version end -->
